@@ -1,0 +1,10 @@
+ARG version
+
+FROM glacialengineering/solana-base:$version
+
+EXPOSE 8900
+EXPOSE 8899
+EXPOSE 1024
+EXPOSE 1027
+
+CMD ["solana-test-validator", "-l", "/ledger"]
