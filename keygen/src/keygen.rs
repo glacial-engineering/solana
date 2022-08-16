@@ -1,4 +1,6 @@
 #![allow(clippy::integer_arithmetic)]
+
+use solana_sdk::signature::keypair_from_seed_and_derivation_path;
 use {
     bip39::{Language, Mnemonic, MnemonicType, Seed},
     clap::{crate_description, crate_name, Arg, ArgMatches, Command},
@@ -713,7 +715,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
                         let (keypair, phrase) = if use_mnemonic {
                             let mnemonic = Mnemonic::new(mnemonic_type, language);
                             let seed = Seed::new(&mnemonic, &passphrase);
-                            (keypair_from_seed(seed.as_bytes()).unwrap(), mnemonic.phrase().to_string())
+                            (keypair_from_seed_and_derivation_path(seed.as_bytes(), Some(Default::default())).unwrap(), mnemonic.phrase().to_string())
                         } else {
                             (Keypair::new(), "".to_string())
                         };
